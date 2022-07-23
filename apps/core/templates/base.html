@@ -42,6 +42,10 @@
 						<a href="{% url 'category_detail' category.slug %}" class="navbar-item">{{ category.title }}</a>
 					
 				{% endfor %}
+
+				<div class="navbar-item">
+					<a href="{% url 'cart_detail' %}" class="button is-primary">Cart</a>
+				</div>
 		</nav>
 
 		<section class="section">
