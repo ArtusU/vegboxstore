@@ -17,8 +17,8 @@ def api_add_to_cart(request):
     product = get_object_or_404(Product, pk = product_id)
     
     if not update:
-        cart.add(product=product, quantity=quantity, quantity_update=False)
+        cart.add(product=product, quantity=quantity, update_quantity=False)
     else:
-        cart.add(product=product, quantity=quantity, quantity_update=True)
+        cart.add(product=product, quantity=quantity, update_quantity=True)
         
     return JsonResponse({'success': True})

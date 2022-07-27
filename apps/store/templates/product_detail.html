@@ -1,18 +1,56 @@
-{% extends 'base.html' %}
-
-{% block title %}{{ product.title }} | {% endblock %}
-
+{% extends 'base.html' %} {% block title %}{{ product.title }} | {% endblock %}
 {% block content %}
+<div id="productapp">
+	<h1 class="title">{{ product.title }}</h1>
+	<p>Price: £{{ product.price }}</p>
 
-<h1 class="title">{{ product.title }}</h1>
-<p>Price: £{{ product.price }}</p>
+	{% if product.description %}
+	<p>{{ product.description }}</p>
+	{% else %}
+	<p>No description available.</p>
+	{% endif %} 
+	<button @click="addToCart({{ product.id}})" class="button is-success">Add to Cart</button>
+    {% endblock content %}
+</div>
 
-{% if product.description %}
-<p>{{ product.description }}</p>
-{% else %}
-<p>No description available.</p>
-{% endif %}
+{% block scripts %}
+<script>
+	var productapp = new Vue({
+		el: "#productapp",
+		delimeters: ["[[", "]]"],
+		data() {
+			return {};
+		},
+		mounted() {
+			console.log("Mounted");
+		},
+		methods: {
+			addToCart(product_id) {
+				console.log("product_id:", product_id);
+                var data = {
+                    'product_id': product_id,
+                    'update': false,
+                    'quantity': 1
+                };
+                fetch('/api/add_to_cart/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    credentials: 'same-origin',
+                    body: JSON.stringify(data)
+                })
+                .then((response) =>{
+                    console.log(response)
+                })
+                .catch(function (error) {
+                    console.log('Error 2');
+                    console.log(error);
+                })
+			},
+		},
+	});
+</script>
 
-
-
-{% endblock content %}
+{% endblock scripts %}
