@@ -1,10 +1,16 @@
-{% extends 'base.html' %}
-
-{% block title %}Cart | {% endblock %}
+{% extends 'base.html' %} {% block title %}Cart | {% endblock %} 
 
 {% block content %}
 
 <h1 class="title">This is cart page</h1>
-
+{% if cart %} 
+    {% for item in cart %}
+        {% with product=item.product %}
+            <p>Product - {{product.title}}</p>
+        {% endwith %}
+    {% endfor %} 
+{% else %}
+<p>Your cart is empty.</p>
+{% endif %} 
 
 {% endblock content %}
