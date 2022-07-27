@@ -24,7 +24,7 @@ from apps.store.views import product_detail, category_detail
 
 urlpatterns = [
     path('', frontpage, name='frontpage'),
-    path('cart/', cart_detail, name='cart'),
+    path('cart/', cart_detail, name='cart_detail'),
     path('contact/', contact, name='contact'),
     path('about/', about, name='about'),
     path('admin/', admin.site.urls),
