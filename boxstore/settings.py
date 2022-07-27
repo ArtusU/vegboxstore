@@ -73,6 +73,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'boxstore.wsgi.application'
 
+SESSION_COOKIE_AGE = 86400
+CART_SESSION_ID = 'cart'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
