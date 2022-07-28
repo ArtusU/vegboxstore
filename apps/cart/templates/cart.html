@@ -1,16 +1,62 @@
-{% extends 'base.html' %} {% block title %}Cart | {% endblock %} 
+{% extends 'base.html' %} 
+{% block title %}Cart | {% endblock %} 
 
 {% block content %}
-
-<h1 class="title">This is cart page</h1>
-{% if cart %} 
-    {% for item in cart %}
-        {% with product=item.product %}
-            <p>Product - {{product.title}}</p>
-        {% endwith %}
-    {% endfor %} 
-{% else %}
-<p>Your cart is empty.</p>
-{% endif %} 
-
+<div id="cartapp">
+    <h1 class="title">This is cart page</h1>
+    {% if cart %} 
+        {% for item in cart %}
+            {% with product=item.product %}
+                <p>Product - {{product.title}}</p>
+                <button @click="removeFromCart({{product.id}})" class="button is-danger">Remove</button></td>
+            {% endwith %}
+        {% endfor %} 
+    {% else %}
+    <p>Your cart is empty.</p>
+    {% endif %} 
+</div>
 {% endblock content %}
+
+{% block scripts %}
+<script>
+    var productapp = new Vue({
+        el: '#cartapp',
+        delimeters: ['[[', ']]'],
+        data () {
+            return {
+                
+            }
+        },
+        mounted() {
+            console.log('Mounted')
+        },
+        methods: {
+            removeFromCart(product_id) {
+                console.log('Remove product_id:', product_id);
+
+                var data = {
+                    'product_id': product_id
+                };
+                    
+                fetch('/api/remove_from_cart/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    credentials: 'same-origin',
+                    body: JSON.stringify(data)
+                })
+                .then((response) => {
+                    console.log(response)
+                })
+                .catch(function (error) {
+                    console.log('Error 2');
+                    console.log(error);
+                })
+            }
+            
+        }
+    })
+</script>
+{% endblock scripts %}

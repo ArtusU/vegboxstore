@@ -38,6 +38,11 @@ class Cart(object):
             self.cart[product_id]['quantity'] = self.cart[product_id]['quantity'] + 1
             
         self.save()
+            
+    def remove(self, product_id):
+        if product_id in self.cart:
+            del self.cart[product_id]
+            self.save()
         
     def save(self):
         self.session[settings.CART_SESSION_ID] = self.cart
