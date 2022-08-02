@@ -20,7 +20,6 @@ class Cart(object):
             self.cart[str(p)]['product'] = Product.objects.get(pk=p)
         for item in self.cart.values():
             item['total_price'] = float(item['price']) * int(item['quantity'])
-            
             yield item
             
     def __len__(self):
@@ -31,7 +30,7 @@ class Cart(object):
         price = product.price
 
         if product_id not in self.cart:
-            self.cart[product_id] = {'quantity': 1, 'price': price, 'id': product_id}
+            self.cart[product_id] = {'quantity': 0, 'price': price, 'id': product_id}
         
         if update_quantity:
             self.cart[product_id]['quantity'] = quantity
