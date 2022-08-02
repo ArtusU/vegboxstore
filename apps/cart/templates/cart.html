@@ -61,6 +61,15 @@
                 .then((response) => {
                     console.log(response)
 
+                    for (var i=0; i<this.products.length; i++) {
+                        var product = this.products[i];
+
+                        if (product.id === product_id) {
+                            this.products[i].quantity = parseInt(this.products[i].quantity) -1;
+                            this.products[i].total_price = parseInt(this.products[i].quantity) * parseFloat(this.products[i].price)
+                        }
+                    }
+
                 })
                 .catch(function (error) {
                     console.log('Error 2');
