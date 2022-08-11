@@ -2,6 +2,11 @@
 {% block content %}
 <div id="productapp">
 	<h1 class="title">{{ product.title }}</h1>
+	{% if product.thumbnail %}
+	<div class="card-image">
+		<img src="{{ product.thumbnail.url }}" />
+	</div>
+	{% endif %}
 	<p>Price: £{{ product.price }}</p>
 
 	{% if product.description %}
