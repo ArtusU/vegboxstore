@@ -21,6 +21,14 @@
                     <td><button @click="removeFromCart(product.id)" class="button is-small is-danger">Remove</button></td>
 				</tr>
 			</tbody>
+            <tfoot>
+                <tr>
+                    <td>Total cost:</td>
+                    <td></td>
+                    <td></td>
+                    <td>{{ cart.get_total_cost }}</td>
+                </tr>
+            </tfoot>
 		</table>
 	</div> 
     {% else %}
