@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'apps.core',
     'apps.store',
     'apps.cart',
+    'apps.order',
     
     'debug_toolbar',
 ]
