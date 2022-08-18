@@ -1,7 +1,8 @@
+import debug_toolbar
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
 from apps.cart.views import cart_detail
 from apps.core.views import frontpage, contact, about
@@ -10,6 +11,7 @@ from apps.store.api import api_add_to_cart, api_remove_from_cart
 
 
 urlpatterns = [
+    path('__debug__/', include(debug_toolbar.urls)),
     path('', frontpage, name='frontpage'),
     path('cart/', cart_detail, name='cart_detail'),
     path('contact/', contact, name='contact'),
