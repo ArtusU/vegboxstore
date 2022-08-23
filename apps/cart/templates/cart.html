@@ -48,69 +48,79 @@
 				</tr>
 			</tfoot>
 		</table>
-		<h2 class="title">Contact information</h2>
-			<div class="columns">
-				<div class="column is-6">
-					<div class="field">
-						<label>First name</label>
+		
+	</div>
+	<form v-on:submit.prevent="submitForm()">
+		<div class="field">
+			<div class="control">
+				<h2 class="title">Contact information</h2>
+					<div class="columns">
+						<div class="column is-6">
+							<div class="field">
+								<label>First name</label>
 
-						<div class="control">
-							<input class="input" type="text" name="first_name" v-model="first_name">
+								<div class="control">
+									<input class="input" type="text" name="first_name" v-model="first_name">
+								</div>
+							</div>
+
+							<div class="field">
+								<label>Last name</label>
+
+								<div class="control">
+									<input class="input" type="text" name="last_name" v-model="last_name">
+								</div>
+							</div>
+
+							<div class="field">
+								<label>E-mail</label>
+
+								<div class="control">
+									<input class="input" type="email" name="email" v-model="email">
+								</div>
+							</div>
+
+							<div class="field">
+								<label>Phone</label>
+
+								<div class="control">
+									<input class="input" type="text" name="phone" v-model="phone">
+								</div>
+							</div>
+						</div>
+
+						<div class="column is-6">
+							<div class="field">
+								<label>Address</label>
+
+								<div class="control">
+									<input class="input" type="text" name="address" v-model="address">
+								</div>
+							</div>
+
+							<div class="field">
+								<label>Postcode</label>
+
+								<div class="control">
+									<input class="input" type="text" name="postcode" v-model="postcode">
+								</div>
+							</div>
+
+							<div class="field">
+								<label>City</label>
+
+								<div class="control">
+									<input class="input" type="text" name="city" v-model="city">
+								</div>
+							</div>
 						</div>
 					</div>
-
-					<div class="field">
-						<label>Last name</label>
-
-						<div class="control">
-							<input class="input" type="text" name="last_name" v-model="last_name">
-						</div>
-					</div>
-
-					<div class="field">
-						<label>E-mail</label>
-
-						<div class="control">
-							<input class="input" type="email" name="email" v-model="email">
-						</div>
-					</div>
-
-					<div class="field">
-						<label>Phone</label>
-
-						<div class="control">
-							<input class="input" type="text" name="phone" v-model="phone">
-						</div>
-					</div>
-				</div>
-
-				<div class="column is-6">
-					<div class="field">
-						<label>Address</label>
-
-						<div class="control">
-							<input class="input" type="text" name="address" v-model="address">
-						</div>
-					</div>
-
-					<div class="field">
-						<label>Postcode</label>
-
-						<div class="control">
-							<input class="input" type="text" name="postcode" v-model="postcode">
-						</div>
-					</div>
-
-					<div class="field">
-						<label>City</label>
-
-						<div class="control">
-							<input class="input" type="text" name="city" v-model="city">
-						</div>
-					</div>
+					<button class="button btn-primary">Submit</button>
 				</div>
 			</div>
-	</div>
+		</div>
+	</form>
+
 	{% else %}
 	<p>Your cart is empty.</p>
 	{% endif %}
@@ -125,6 +135,13 @@
 	    store: store,
 	    data () {
 	        return {
+				first_name: '',
+                last_name: '',
+                email: '',
+                phone: '',
+                address: '',
+                postcode: '',
+                city: '',
 	            products: [{{ productsstring|safe }}],
 	        }
 	    },
@@ -138,6 +155,35 @@
 
 	       },
 	    methods: {
+			submitForm() {
+				console.log('Submit Form');
+				var data = {
+					'first_name': this.first_name,
+					'last_name': this.last_name,
+					'email': this.email,
+					'phone': this.phone,
+					'address': this.address,
+					'city': this.city,
+					'postcode': this.postcode,
+				};
+				fetch('/api/checkout/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    credentials: 'same-origin',
+                    body: JSON.stringify(data)
+                })
+                .then((response) =>{
+					console.log('Success');
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log('Error 2');
+                    console.log(error);
+                })
+			},
 
 	        decrementQuantity(product_id, quantity, price) {
 	            console.log('decrementQuantity product_id:', product_id);
