@@ -3,9 +3,36 @@ import json
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from apps.cart.cart import Cart
+from apps.order.models import Order, OrderItem
+from apps.order.utils import checkout
 
 from .models import Product
 
+
+def api_checkout(request):
+    cart = Cart(request)
+    data = json.loads(request.body)
+    orderid = checkout(request, 
+                       data['first_name'], 
+                       data['last_name'], 
+                       data['email'], 
+                       data['address'], 
+                       data['postcode'], 
+                       data['city'], 
+                       data['phone']
+                       )
+    
+    paid = True
+    
+    if paid == True:
+        order = Order.objects.get(pk=orderid)
+        order.paid = True
+        order.paid_amount = cart.get_total_cost()
+        order.save()
+        cart.clear()
+        
+    return JsonResponse({'success': True})
+        
 
 def api_add_to_cart(request):
     data = json.loads(request.body)
