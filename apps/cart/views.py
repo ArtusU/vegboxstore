@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.shortcuts import render
 from .cart import Cart
 
@@ -13,6 +14,7 @@ def cart_detail(request):
     
     context = {
         'cart': cart,
+        'pub_key': settings.STRIPE_PUBLISHABLE_KEY,
         'productsstring': productsstring.rstrip(',')
         }
     
