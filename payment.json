@@ -1,0 +1,149 @@
+Payment: pi_3Lf05SGjLUpjNrZJ1qPvXZrm
+
+amount_total: {
+  "amount": 600,
+  "amount_capturable": 0,
+  "amount_details": {
+    "tip": {}
+  },
+  "amount_received": 600,
+  "application": null,
+  "application_fee_amount": null,
+  "automatic_payment_methods": null,
+  "canceled_at": null,
+  "cancellation_reason": null,
+  "capture_method": "automatic",
+  "charges": {
+    "data": [
+      {
+        "amount": 600,
+        "amount_captured": 600,
+        "amount_refunded": 0,
+        "application": null,
+        "application_fee": null,
+        "application_fee_amount": null,
+        "balance_transaction": "txn_3Lf05SGjLUpjNrZJ1XZUbDvX",
+        "billing_details": {
+          "address": {
+            "city": null,
+            "country": "GB",
+            "line1": null,
+            "line2": null,
+            "postal_code": "EH7 8YU",
+            "state": null
+          },
+          "email": "kala@mail.com",
+          "name": "Kala",
+          "phone": null
+        },
+        "calculated_statement_descriptor": "ARTUS U",
+        "captured": true,
+        "created": 1662464266,
+        "currency": "gbp",
+        "customer": "cus_MNldc1YoNeRj7e",
+        "description": null,
+        "destination": null,
+        "dispute": null,
+        "disputed": false,
+        "failure_balance_transaction": null,
+        "failure_code": null,
+        "failure_message": null,
+        "fraud_details": {},
+        "id": "ch_3Lf05SGjLUpjNrZJ1nwTHPTb",
+        "invoice": null,
+        "livemode": false,
+        "metadata": {},
+        "object": "charge",
+        "on_behalf_of": null,
+        "order": null,
+        "outcome": {
+          "network_status": "approved_by_network",
+          "reason": null,
+          "risk_level": "normal",
+          "risk_score": 11,
+          "seller_message": "Payment complete.",
+          "type": "authorized"
+        },
+        "paid": true,
+        "payment_intent": "pi_3Lf05SGjLUpjNrZJ1qPvXZrm",
+        "payment_method": "pm_1Lf069GjLUpjNrZJG57RrmiE",
+        "payment_method_details": {
+          "card": {
+            "brand": "visa",
+            "checks": {
+              "address_line1_check": null,
+              "address_postal_code_check": "pass",
+              "cvc_check": "pass"
+            },
+            "country": "US",
+            "exp_month": 12,
+            "exp_year": 2022,
+            "fingerprint": "AzuEJBJd8QpSVLHZ",
+            "funding": "credit",
+            "installments": null,
+            "last4": "4242",
+            "mandate": null,
+            "network": "visa",
+            "three_d_secure": null,
+            "wallet": null
+          },
+          "type": "card"
+        },
+        "receipt_email": null,
+        "receipt_number": null,
+        "receipt_url": "https://pay.stripe.com/receipts/payment/CAcaFwoVYWNjdF8xSFZISndHakxVcGpOclpKKIvi3JgGMgYd9OXivJU6LBYT6Zg9iHiM7clttdad_Tpvv2uY33_pszQ1N2PDj3wVGJn9YHxI4gyp8jjP",
+        "refunded": false,
+        "refunds": {
+          "data": [],
+          "has_more": false,
+          "object": "list",
+          "total_count": 0,
+          "url": "/v1/charges/ch_3Lf05SGjLUpjNrZJ1nwTHPTb/refunds"
+        },
+        "review": null,
+        "shipping": null,
+        "source": null,
+        "source_transfer": null,
+        "statement_descriptor": null,
+        "statement_descriptor_suffix": null,
+        "status": "succeeded",
+        "transfer_data": null,
+        "transfer_group": null
+      }
+    ],
+    "has_more": false,
+    "object": "list",
+    "total_count": 1,
+    "url": "/v1/charges?payment_intent=pi_3Lf05SGjLUpjNrZJ1qPvXZrm"
+  },
+  "client_secret": "pi_3Lf05SGjLUpjNrZJ1qPvXZrm_secret_X6mE0jMkvRuJrYvq7WDLM8iNj",
+  "confirmation_method": "automatic",
+  "created": 1662464222,
+  "currency": "gbp",
+  "customer": "cus_MNldc1YoNeRj7e",
+  "description": null,
+  "id": "pi_3Lf05SGjLUpjNrZJ1qPvXZrm",
+  "invoice": null,
+  "last_payment_error": null,
+  "livemode": false,
+  "metadata": {},
+  "next_action": null,
+  "object": "payment_intent",
+  "on_behalf_of": null,
+  "payment_method": "pm_1Lf069GjLUpjNrZJG57RrmiE",
+  "payment_method_options": {
+    "card": {
+      "installments": null,
+  ],
+  "processing": null,
+  "receipt_email": null,
+  "review": null,
+  "setup_future_usage": null,
+  "shipping": null,
+  "source": null,
+  "statement_descriptor": null,
+  "statement_descriptor_suffix": null,
+  "status": "succeeded",
+  "transfer_data": null,
+  "transfer_group": null
+}
