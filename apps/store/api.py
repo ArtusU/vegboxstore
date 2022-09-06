@@ -31,12 +31,27 @@ def checkout_session(request):
     
     stripe.api_key = settings.STRIPE_SECRET_KEY
     session = stripe.checkout.Session.create(
-        payment_method_types=['card'],
-        line_items=items,
-        mode='payment',
-        success_url='http://127.0.0.1:8000/cart/success/',
-        cancel_url='http://127.0.0.1:8000/cart/'
+                                payment_method_types=['card'],
+                                line_items=items,
+                                mode='payment',
+                                success_url='http://127.0.0.1:8000/cart/success/',
+                                cancel_url='http://127.0.0.1:8000/cart/'
     )
+    payment_intent = session.payment_intent
+    data = json.loads(request.body)
+    orderid = checkout(request, 
+                       data['first_name'], 
+                       data['last_name'], 
+                       data['email'], 
+                       data['address'], 
+                       data['postcode'], 
+                       data['city'], 
+                       data['phone']
+                       )
+    order = Order.objects.get(id=orderid)
+    order.payment_intent = payment_intent
+    order.save()
+    
     return JsonResponse({'session': session})
     
 
