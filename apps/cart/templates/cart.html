@@ -46,8 +46,26 @@
 						<td></td>
 						<td>[[totalCost]]</td>
 					</tr>
+					<tr v-if="coupon_value">
+						<td colspan="3">Total cost with coupon:</td>
+						<td>[[ totalCostWithCoupon ]]</td>
+					</tr>
 				</tfoot>
 			</table>
+			<hr>
+			<input type="hidden" v-model="coupon_value">
+			<h2 class="subtitle">Coupon code</h2>
+			<div class="field has-addons">
+				<div class="control">
+					<input type="text" v-model="coupon_code" class="input">
+				</div>
+				<div class="control">
+					<button @click="applyCoupon()" class="button is-success">Apply</button>
+				</div>
+			</div>
+			<div class="notification is-warning" v-if="showCouponCodeError">
+				<p>The coupon code is not valid.</p>
+			</div>
 		</div>
 
 		<h2 class="title">Contact information</h2>
@@ -165,22 +183,32 @@
 	        return {
 				errors: [],
 				first_name: '',
-	               last_name: '',
-	               email: '',
-	               phone: '',
-	               address: '',
-	               postcode: '',
-	               city: '',
+				last_name: '',
+				email: '',
+				phone: '',
+				address: '',
+				postcode: '',
+				city: '',
 	            products: [{{ productsstring|safe }}],
+				coupon_value: 0,
+				coupon_code: '',
+				showCouponCodeError: false
 	        }
 	    },
-	       computed: {
+	        computed: {
 	           numItems: function() {
 	               return store.state.numItems
 	           },
 	           totalCost: function() {
 	               return store.state.totalCost
 	           },
+			   totalCostWithCoupon: function() {
+				if (this.coupon_value > 0) {
+					return store.state.totalCost - (store.state.totalCost * (parseInt(this.coupon_value)) / 100);
+				} else {
+					return store.state.totalCost;
+				}
+			   }
 	       },
 	    methods: {
 			validateForm() {
@@ -216,6 +244,27 @@
 
 	               return this.errors.length;
 	           },
+			applyCoupon() {
+				if (this.coupon_code !== '') {
+					fetch('/api/can_use/?coupon_code=' + this.coupon_code, {
+						method: 'GET'
+					})
+					.then((response) => {
+						return response.json();
+					})
+					.then((data) => {
+						if (data.amount) {
+							this.showCouponCodeError = false
+							this.coupon_value = parseInt(data.amount)
+						} else {
+							this.coupon_value = 0
+							this.showCouponCodeError = true
+						}
+					});
+				} else {
+					this.showCouponCodeError = true
+				}
+			},
 			buy() {
 				console.log('buy stripe')
 				var data = {

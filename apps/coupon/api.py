@@ -1,5 +1,5 @@
 import json
-from django.http import HttpResponse
+from django.http import JsonResponse
 
 from .models import Coupon
 
@@ -15,4 +15,5 @@ def api_can_use(request):
             json_response = {'amount': 0}
     except Exception:
         json_response = {'amount': 0}
-    return HttpResponse(json_response)
+        
+    return JsonResponse(json_response)
