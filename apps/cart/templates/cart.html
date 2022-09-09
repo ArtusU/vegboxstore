@@ -44,11 +44,11 @@
 						<td>Total cost:</td>
 						<td></td>
 						<td></td>
-						<td>[[totalCost]]</td>
+						<td>£[[totalCost]]</td>
 					</tr>
 					<tr v-if="coupon_value">
 						<td colspan="3">Total cost with coupon:</td>
-						<td>[[ totalCostWithCoupon ]]</td>
+						<td>£[[ totalCostWithCoupon ]]</td>
 					</tr>
 				</tfoot>
 			</table>
@@ -274,7 +274,8 @@
 	                   'phone': this.phone,
 	                   'address': this.address,
 	                   'postcode': this.postcode,
-	                   'city': this.city
+	                   'city': this.city,
+					   'coupon_code': this.coupon_code,
 	               };
 				if (this.validateForm() === 0) {
 					var stripe = Stripe('{{ pub_key }}');

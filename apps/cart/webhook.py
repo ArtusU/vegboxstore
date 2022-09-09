@@ -23,7 +23,7 @@ def webhook(request):
     if event.type == 'payment_intent.succeeded':
         payment_intent = event.data.object    
         order = Order.objects.get(payment_intent=payment_intent.id)
-        order.paid_amount = payment_intent.amount
+        order.paid_amount = payment_intent.amount/100
         order.paid = True
         order.save()
     return HttpResponse(status=200)

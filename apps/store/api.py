@@ -5,6 +5,7 @@ from django.conf import settings
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from apps.cart.cart import Cart
+from apps.coupon.models import Coupon
 from apps.order.models import Order, OrderItem
 from apps.order.utils import checkout
 
@@ -12,11 +13,24 @@ from .models import Product
 
 
 def checkout_session(request):
+    data = json.loads(request.body)
+    coupon_code = data['coupon_code']
+    coupon_value = 0
+    
+    if coupon_code != '':
+        coupon = Coupon.objects.get(code=coupon_code)
+        if coupon.can_use():
+            coupon_value = coupon.value
+            coupon.use()
+    
     cart = Cart(request)
     items = []
     for item in cart:
         product = item['product']
-        price = int(product.price)
+        price = int(product.price * 100)
+        if coupon_value > 0:
+            price = int(price - (int(price * (int(coupon_value)/100))))
+            
         obj = {
             'price_data': {
                 'currency': 'gbp',
@@ -38,7 +52,6 @@ def checkout_session(request):
                                 cancel_url='http://127.0.0.1:8000/cart/'
     )
     payment_intent = session.payment_intent
-    data = json.loads(request.body)
     orderid = checkout(request, 
                        data['first_name'], 
                        data['last_name'], 
@@ -50,34 +63,10 @@ def checkout_session(request):
                        )
     order = Order.objects.get(id=orderid)
     order.payment_intent = payment_intent
+    order.used_coupon = coupon_code
     order.save()
     
     return JsonResponse({'session': session})
-    
-
-def api_checkout(request):
-    cart = Cart(request)
-    data = json.loads(request.body)
-    orderid = checkout(request, 
-                       data['first_name'], 
-                       data['last_name'], 
-                       data['email'], 
-                       data['address'], 
-                       data['postcode'], 
-                       data['city'], 
-                       data['phone']
-                       )
-    
-    paid = True
-    
-    if paid == True:
-        order = Order.objects.get(pk=orderid)
-        order.paid = True
-        order.paid_amount = cart.get_total_cost()
-        order.save()
-        cart.clear()
-        
-    return JsonResponse({'success': True})
         
 
 def api_add_to_cart(request):
