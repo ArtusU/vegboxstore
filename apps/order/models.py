@@ -32,6 +32,7 @@ class Order(models.Model):
     used_coupon = models.CharField(max_length=50, blank=True, null=True)
     payment_intent = models.CharField(max_length=255)
     shipped_date = models.DateTimeField(blank=True, null=True)
+    status_date_changed = models.DateTimeField(blank=True, null=True)
     status = models.CharField(max_length=40, choices=STATUS_CHOICES, default=ORDERED)
     
     def __str__(self):
@@ -45,4 +46,4 @@ class OrderItem(models.Model):
     quantity = models.IntegerField(default=1)
 
     def __str__(self):
-        return self.id
+        return str(self.id)
