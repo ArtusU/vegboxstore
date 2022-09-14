@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Search | {% endblock %}
+
+{% block content %}
+    <h1 class="title">Search</h1>
+    <h2 class="subtitle">Search term: "{{ query }}"</h2>
+
+    <hr>
+
+    {% with products as list_products %}
+        {% include 'parts/product_list.html' %}
+    {% endwith %}
+{% endblock %}

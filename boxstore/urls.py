@@ -8,13 +8,14 @@ from apps.cart.webhook import webhook
 from apps.cart.views import cart_detail, success
 from apps.core.views import frontpage, contact, about
 from apps.coupon.api import api_can_use
-from apps.store.views import product_detail, category_detail
+from apps.store.views import product_detail, category_detail, search
 from apps.store.api import api_add_to_cart, api_remove_from_cart, checkout_session
 
 
 urlpatterns = [
     path('__debug__/', include(debug_toolbar.urls)),
     path('', frontpage, name='frontpage'),
+    path('search/', search, name='search'),
     path('cart/', cart_detail, name='cart_detail'),
     path('hooks/', webhook, name='webhook'),
     path('cart/success/', success, name='success'),

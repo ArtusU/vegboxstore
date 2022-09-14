@@ -24,7 +24,7 @@
             <div id="main-navbar" class="navbar-menu" :class="{ 'is-active': menuClass }">
 				<div class="navbar-start">
 					<div class="navbar-item">
-						<form method="get" action="#">
+						<form method="get" action="{% url 'search' %}">
 							<div class="field has-addons">
 								<div class="control">
 									<input type="text" class="input" placeholder="Search..." name="query">
