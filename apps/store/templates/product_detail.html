@@ -5,13 +5,28 @@
 		<ul>
 			<li><a href="{% url 'frontpage' %}">Home</a></li>
 			{% if product.category.parent %}
-				<li><a href="{% url 'category_detail' product.category.parent.slug %}">{{ product.category.parent.title }}</a></li>
+			<li>
+				<a href="{% url 'category_detail' product.category.parent.slug %}"
+					>{{ product.category.parent.title }}</a
+				>
+			</li>
 			{% endif %}
-			<li><a href="{% url 'category_detail' product.category.slug %}">{{ product.category.title }}</a></li>
-			<li class="is-active"><a href="{% url 'product_detail' product.category.slug product.slug %}">{{ product.title }}</a></li>
+			<li>
+				<a href="{% url 'category_detail' product.category.slug %}"
+					>{{ product.category.title }}</a
+				>
+			</li>
+			<li class="is-active">
+				<a href="{% url 'product_detail' product.category.slug product.slug %}"
+					>{{ product.title }}</a
+				>
+			</li>
 		</ul>
 	</nav>
-	
+
+	<article class="message is-success" v-if="showMessage">
+		<div class="message-body">The product was added to the cart!</div>
+	</article>
 	<h1 class="title">{{ product.title }}</h1>
 	{% if product.thumbnail %}
 	<div class="card-image">
@@ -24,9 +39,11 @@
 	<p>{{ product.description }}</p>
 	{% else %}
 	<p>No description available.</p>
-	{% endif %} 
-	<button @click="addToCart({{ product.id}})" class="button is-success">Add to Cart</button>
-    {% endblock content %}
+	{% endif %}
+	<button @click="addToCart({{ product.id}})" class="button is-success">
+		Add to Cart
+	</button>
+	{% endblock content %}
 </div>
 
 {% block scripts %}
@@ -35,7 +52,9 @@
 		el: "#productapp",
 		delimeters: ["[[", "]]"],
 		data() {
-			return {};
+			return {
+				showMessage: false,
+			};
 		},
 		mounted() {
 			console.log("Mounted");
@@ -43,28 +62,30 @@
 		methods: {
 			addToCart(product_id) {
 				console.log("product_id:", product_id);
-                var data = {
-                    'product_id': product_id,
-                    'update': false,
-                    'quantity': 1
-                };
-                fetch('/api/add_to_cart/', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': '{{ csrf_token }}'
-                    },
-                    credentials: 'same-origin',
-                    body: JSON.stringify(data)
-                })
-                .then((response) =>{
-                    console.log(response)
-					store.commit('increment', 1)
-                })
-                .catch(function (error) {
-                    console.log('Error 2');
-                    console.log(error);
-                })
+				var data = {
+					product_id: product_id,
+					update: false,
+					quantity: 1,
+				};
+				fetch("/api/add_to_cart/", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+						"X-CSRFToken": "{{ csrf_token }}",
+					},
+					credentials: "same-origin",
+					body: JSON.stringify(data),
+				})
+					.then((response) => {
+						console.log(response);
+						this.showMessage = true;
+						store.commit("increment", 1);
+						setTimeout(() => (this.showMessage = false), 2000);
+					})
+					.catch(function (error) {
+						console.log("Error 2");
+						console.log(error);
+					});
 			},
 		},
 	});
