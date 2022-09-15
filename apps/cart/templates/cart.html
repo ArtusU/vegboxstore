@@ -7,6 +7,7 @@
 		<div class="table">
 			<table class="table is-fullwidth is-striped">
 				<thead>
+					<th></th>
 					<th>Product</th>
 					<th>Quantity</th>
 					<th>Price</th>
@@ -14,7 +15,16 @@
 				</thead>
 				<tbody>
 					<tr v-for="product in products">
-						<td>[[product.title]]</td>
+						<td>
+							<figure class="image is-48x48">
+								<img :src="product.thumbnail">
+							</figure>
+						</td>
+						<td>
+							<a :href="product.product_url">
+							[[product.title]]
+							</a>
+						</td>
 						<td>
 							<button
 								@click="decrementQuantity(product.id, product.quantity, product.price)"
@@ -28,7 +38,7 @@
 								+
 							</button>
 						</td>
-						<td>[[product.total_price]]</td>
+						<td>£[[product.total_price]]</td>
 						<td>
 							<button
 								@click="removeFromCart(product.id)"
@@ -41,10 +51,11 @@
 				</tbody>
 				<tfoot>
 					<tr>
+						<td></td>
+						<td></td>
 						<td>Total cost:</td>
-						<td></td>
-						<td></td>
 						<td>£[[totalCost]]</td>
+						<td></td>
 					</tr>
 					<tr v-if="coupon_value">
 						<td colspan="3">Total cost with coupon:</td>
@@ -200,13 +211,14 @@
 	               return store.state.numItems
 	           },
 	           totalCost: function() {
-	               return store.state.totalCost
+	               return store.state.totalCost.toFixed(2)
 	           },
 			   totalCostWithCoupon: function() {
 				if (this.coupon_value > 0) {
-					return store.state.totalCost - (store.state.totalCost * (parseInt(this.coupon_value)) / 100);
+					var totalCostAfterCoupon = store.state.totalCost - (store.state.totalCost * (parseInt(this.coupon_value)) / 100);
+					return totalCostAfterCoupon.toFixed(2)
 				} else {
-					return store.state.totalCost;
+					return store.state.totalCost.toFixed(2);
 				}
 			   }
 	       },
