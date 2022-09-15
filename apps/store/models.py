@@ -1,3 +1,4 @@
+from audioop import reverse
 from io import BytesIO
 from django.core.files import File
 from django.db import models
@@ -18,6 +19,9 @@ class Category(models.Model):
 
     def __str__(self):
         return self.title
+    
+    def get_absolute_url(self):
+        return '/%s/' % (self.slug)
     
 
 class Product(models.Model):
@@ -45,6 +49,9 @@ class Product(models.Model):
         if self.image:
             self.thumbnail = self.make_thumbnail(self.image)
         super().save(*args, **kwargs)
+        
+    def get_absolute_url(self):
+        return '/%s/%s/' % (self.category.slug, self.slug)
     
     def make_thumbnail(self, image, size=(300, 200)) -> thumbnail:
         img = Image.open(image)
