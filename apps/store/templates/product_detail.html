@@ -32,11 +32,11 @@
 	<div class="columns">
 		<div class="column is-4">
 			<figure class="image is-4by3">
-				<img :src="mainImage">
+				<img :src="mainImage" />
 			</figure>
 		</div>
 	</div>
-	
+
 	{% if product.images.all %}
 	<hr />
 	<div class="columns">
@@ -55,11 +55,15 @@
 	<p>{{ product.description }}</p>
 	{% else %}
 	<p>No description available.</p>
-	{% endif %}
+	{% endif %} {% if product.in_cart %}
+	<p>Already in the cart.</p>
+	{% else %} {% if product.num_available > 0 %}
 	<button @click="addToCart({{ product.id}})" class="button is-success">
 		Add to Cart
 	</button>
-	{% endblock content %}
+	{% else %}
+	<p>The product is out of stock.</p>
+	{% endif %} {% endif %} {% endblock content %}
 </div>
 
 {% block scripts %}

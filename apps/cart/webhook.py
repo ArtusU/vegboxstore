@@ -1,4 +1,5 @@
 import json
+from math import prod
 import stripe
 
 from django.conf import settings
@@ -26,4 +27,10 @@ def webhook(request):
         order.paid_amount = payment_intent.amount/100
         order.paid = True
         order.save()
+        
+        for item in order.items.all():
+            product = item.product
+            product.num_avaliable -= item.quantity
+            product.save()
+            
     return HttpResponse(status=200)

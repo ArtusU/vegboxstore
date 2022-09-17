@@ -1,6 +1,8 @@
 from django.shortcuts import get_object_or_404, render
 from django.db.models import Q
 
+from apps.cart.cart import Cart
+
 from .models import Product, Category
 
 
@@ -22,6 +24,13 @@ def product_detail(request, category_slug, slug):
     imagesstring = "{'thumbnail':'%s', 'image':'%s'}," % (product.thumbnail.url, product.image.url)
     for image in product.images.all():
         imagesstring = imagesstring + ("{'thumbnail':'%s', 'image':'%s'}," % (image.thumbnail.url, image.image.url))
+    
+    cart = Cart(request)
+    
+    if cart.has_product(product.id):
+        product.in_cart = True
+    else:
+        product.in_cart = False
 
     context = {
         'product': product,
@@ -38,3 +47,4 @@ def category_detail(request, slug):
         'products': products
     }
     return render(request, 'category_detail.html', context)
+
