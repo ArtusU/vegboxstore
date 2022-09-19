@@ -12,9 +12,6 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = []
 
-EMAIL_HOST = 'localhost'
-EMAIL_PORT = 1025
-
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -105,7 +102,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/London'
 
 USE_I18N = True
 

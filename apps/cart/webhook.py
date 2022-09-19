@@ -9,8 +9,6 @@ from django.views.decorators.csrf import csrf_exempt
 from django.template.loader import render_to_string
 
 from apps.order.models import Order
-from apps.store.utilities import send_order_confirmation
-
 
 @csrf_exempt
 def webhook(request):
