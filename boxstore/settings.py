@@ -12,6 +12,9 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = []
 
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 1025
+
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
