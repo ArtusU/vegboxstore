@@ -3,10 +3,13 @@ from math import prod
 import stripe
 
 from django.conf import settings
+from django.core.mail import send_mail
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.template.loader import render_to_string
 
 from apps.order.models import Order
+from apps.store.utilities import send_order_confirmation
 
 
 @csrf_exempt
@@ -30,7 +33,10 @@ def webhook(request):
         
         for item in order.items.all():
             product = item.product
-            product.num_avaliable -= item.quantity
+            product.num_available -= item.quantity
             product.save()
+            
+        html = render_to_string('order_confirmation.html', {'order': order})
+        send_mail('Order confirmation', 'Your order has been sent.', 'mail@ecf-vegbox.com', ['mail@ecf-vegbox.com', order.email], fail_silently=False, html_message=html)
             
     return HttpResponse(status=200)
