@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'apps.coupon',
     'apps.order',
     'apps.store',
+    'apps.userprofile',
     
     'debug_toolbar',
 ]
