@@ -37,6 +37,27 @@
 					</div>
 				</div>
 				<div class="navbar-end">
+					{% if request.user.is_authenticated %}
+					<div class="navbar-item">
+						<p>Welcome {{ request.user.username }}!</p>
+					</div>
+						<div class="navbar-item">
+						<a href="" class="button is-primary">Logout</a>
+					</div>
+					{% else %}
+					<div class="navbar-item">
+						<p>Welcome Anonimous!</p>
+					</div>
+					<div class="navbar-item">
+						<a href="" class="button is-primary">Login</a>
+					</div>
+					<div class="navbar-item">
+						<a href="{% url 'signup' %}" class="button is-primary">Signup</a>
+					</div>
+					{% endif %}
+				
+				
+				
 				{% for category in menu_categories %}
 					
 						<a href="{% url 'category_detail' category.slug %}" class="navbar-item">{{ category.title }}</a>
