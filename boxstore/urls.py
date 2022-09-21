@@ -3,6 +3,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
 from django.contrib import admin
+from django.contrib.auth import views
 from django.urls import path, include
 
 from apps.cart.webhook import webhook
@@ -29,6 +30,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     
     path('signup/', signup, name='signup'),
+    path('login/', views.LoginView.as_view(template_name='login.html'), name='login'),
+    path('logout/', views.LogoutView.as_view(), name='logout'),
     
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     
