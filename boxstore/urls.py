@@ -12,7 +12,7 @@ from apps.core.views import frontpage, contact, about
 from apps.coupon.api import api_can_use
 from apps.store.views import product_detail, category_detail, search
 from apps.store.api import api_add_to_cart, api_remove_from_cart, checkout_session
-from apps.userprofile.views import signup
+from apps.userprofile.views import myaccount, signup
 
 from .sitemaps import StaticViewSitemap, CategorySitemap, ProductSitemap
 
@@ -32,6 +32,7 @@ urlpatterns = [
     path('signup/', signup, name='signup'),
     path('login/', views.LoginView.as_view(template_name='login.html'), name='login'),
     path('logout/', views.LogoutView.as_view(), name='logout'),
+    path('myaccount/', myaccount, name='myaccount'),
     
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     

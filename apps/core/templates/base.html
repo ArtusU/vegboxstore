@@ -39,7 +39,7 @@
 				<div class="navbar-end">
 					{% if request.user.is_authenticated %}
 					<div class="navbar-item">
-						<p>Welcome {{ request.user.username|title }}!</p>
+						<p>Welcome <a href="{% url 'myaccount' %}">{{ request.user.username|title }}</a> !</p>
 					</div>
 						<div class="navbar-item">
 						<a href="{% url 'logout' %}" class="button is-primary">Logout</a>
@@ -61,7 +61,7 @@
 					{% endfor %}
 
 				<div class="navbar-item">
-					<a href="{% url 'cart_detail' %}" class="button is-primary">Cart ([[ numItems ]])</a>
+					<a href="{% url 'cart_detail' %}" class="button is-link">Cart ([[ numItems ]])</a>
 				</div>
 		</nav>
 
