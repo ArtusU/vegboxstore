@@ -11,16 +11,12 @@
 
     <p><strong>Name: </strong>{{ request.user.get_full_name }}</p>
     <p><strong>E-mail: </strong>{{ request.user.email }}</p>
-    <p><strong>Address: </strong>{{ request.user.userprofile.address }}</p>
-    <p><strong>Postcode and city: </strong>{{ request.user.userprofile.postcode }} {{ request.user.userprofile.city }}</p>
-    <p><strong>Phone: </strong>{{ request.user.userprofile.phone }}</p>
-
     <hr>
 
     <h2 class="subtitle">My orders</h2>
 
     {% for order in request.user.orders.all %}
-        <article class="message is-light">
+        <article class="message is-primary">
             <div class="message-header">
                 <p>{{ order.created_at }}</p>
                 <p><strong>Status: </strong>{{ order.status }}</p>
@@ -30,21 +26,47 @@
                 <table class="table is-striped is-fullwidth">
                     <thead>
                         <tr>
+                            <th>Date</th>
+                            <th>Address</th>
+                            <th>City</th>
+                            <th>Postcode</th>
+                            <th>Phone</th>
                             <th>Title</th>
                             <th>Quantity</th>
                             <th>Price</th>
+                            <th>Payment</th>
                         </tr>
                     </thead>
 
                     <tbody>
                         {% for item in order.items.all %}
                             <tr>
+                                <td>{{ item.order.created_at }}</td>
+                                <td>{{ item.order.address }}</td>
+                                <td>{{ item.order.city }}</td>
+                                <td>{{ item.order.postcode }}</td>
+                                <td>{{ item.order.phone }}</td>
                                 <td>{{ item.product.title }}</td>
                                 <td>{{ item.quantity }}</td>
-                                <td>{{ item.price }}</td>
+                                <td>£{{ item.price }}</td>
+                                <td>{% if item.order.paid %} Paid {% else %} Unpaid {% endif %}</td>
                             </tr>
                         {% endfor %}
                     </tbody>
+
+                    <tfoot>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>Total</td>
+                            <td>{{ order.get_total_quantity }}</td>
+                            <td>{{ order.paid_amount }}</td>
+                        </tr>
+                    </tfoot>
 
                 </table>
             </div>
