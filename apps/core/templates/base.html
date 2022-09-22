@@ -39,7 +39,7 @@
 				<div class="navbar-end">
 					{% if request.user.is_authenticated %}
 					<div class="navbar-item">
-						<p>Welcome {{ request.user.username }}!</p>
+						<p>Welcome {{ request.user.username|title }}!</p>
 					</div>
 						<div class="navbar-item">
 						<a href="{% url 'logout' %}" class="button is-primary">Logout</a>

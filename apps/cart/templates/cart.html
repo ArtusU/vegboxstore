@@ -79,6 +79,14 @@
 			</div>
 		</div>
 
+		{% if not request.user.is_authenticated %}
+		<p>
+			Continue as guest or <a href="{% url 'login' %}">log in</a> /
+			<a href="{% url 'signup' %}">sign up</a>.
+		</p>
+		<hr />
+		{% endif %}
+
 		<h2 class="title">Contact information</h2>
 		<div class="columns">
 			<div class="column is-6">
@@ -181,9 +189,7 @@
 		</article>
 	</div>
 </div>
-{% endblock content %} 
-
-{% block scripts %}
+{% endblock content %} {% block scripts %}
 <script type="application/javascript" src="https://js.stripe.com/v3/"></script>
 <script>
 	var productapp = new Vue({
@@ -193,9 +199,9 @@
 	    data () {
 	        return {
 				errors: [],
-				first_name: '',
-				last_name: '',
-				email: '',
+				first_name: '{{ first_name }}',
+				last_name: '{{ last_name }}',
+				email: '{{ email }}',
 				phone: '',
 				address: '',
 				postcode: '',
