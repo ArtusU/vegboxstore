@@ -56,14 +56,63 @@
 	{% else %}
 	<p>No description available.</p>
 	{% endif %} {% if product.in_cart %}
-	<p>Already in the cart.</p>
+	<p></p>
 	{% else %} {% if product.num_available > 0 %}
-	<button @click="addToCart({{ product.id}})" class="button is-success">
+
+	<button @click="addToCart({{ product.id}})" class="button is-success mt=10px">
 		Add to Cart
 	</button>
 	{% else %}
-	<p>The product is out of stock.</p>
-	{% endif %} {% endif %} {% endblock content %}
+	<article class="message is-danger">
+		<div class="message-header">
+		  <p>The product is out of stock.</p>
+		</div>
+	  </article>
+	{% endif %} {% endif %}
+
+	<hr />
+	{% if product.variants.all %}
+	<h3>Other variants of this product.</h3>
+	<div class="columns">
+		<div class="column is-6">
+			<table class="table is-fullwidth">
+				<tbody>
+					{% for variant in product.variants.all %}
+					<tr>
+						<td>
+							<figure class="image is-48x48">
+								{% if variant.thumbnail.url %}
+								<img src="{{ variant.thumbnail.url }}" />
+								{% endif %}
+							</figure>
+						</td>
+
+						<td>{{ variant.title }}</td>
+						<td>£{{ variant.price }}</td>
+
+						<td>
+							{% if variant.in_cart %}
+							<p>Already in cart!</p>
+							{% else %} {% if variant.num_available > 0 %}
+							<button
+								@click="addToCart({{ variant.id }})"
+								class="button is-success"
+							>
+								Add to cart
+							</button>
+							{% else %}
+							<p>The product is out of stock!</p>
+							{% endif %} {% endif %}
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	{% endif %} 
+	{% endblock content %}
 </div>
 
 {% block scripts %}
