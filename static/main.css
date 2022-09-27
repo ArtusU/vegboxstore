@@ -1,0 +1,7 @@
+form .helptext {
+    font-size: 12px;
+    color: rgb(55, 73, 67);
+}
+form ul {
+    display: none;
+}
