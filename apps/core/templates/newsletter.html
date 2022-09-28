@@ -1,6 +1,5 @@
 <div class="newsletter-wrapper" id="newsletter-wrapper">
 	<h2 class="subtitle">Subscribe to our newsletter</h2>
-
 	<form>
 		<div class="field has-addons">
 			<div class="control">
@@ -17,3 +16,15 @@
 		</div>
 	</form>
 </div>
+
+<script>
+	var newsletter = new Vue({
+		el: '#newsletter-wrapper',
+		data () {
+			return {
+				email: '',
+				showSuccess: false,
+			}
+		}, 
+	});
+</script>
