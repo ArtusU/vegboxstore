@@ -10,6 +10,7 @@ from apps.cart.webhook import webhook
 from apps.cart.views import cart_detail, success
 from apps.core.views import frontpage, contact, about
 from apps.coupon.api import api_can_use
+from apps.newsletter.api import api_add_subscriber
 from apps.store.views import product_detail, category_detail, search
 from apps.store.api import api_add_to_cart, api_remove_from_cart, checkout_session
 from apps.userprofile.views import myaccount, signup
@@ -37,6 +38,8 @@ urlpatterns = [
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     
     path('api/can_use/', api_can_use, name='api_can_use'),
+    
+    path('api/add_subscriber/', api_add_subscriber, name='api_add_subscriber'),
     
     path('api/add_to_cart/', api_add_to_cart, name='api_add_to_cart'),
     path('api/remove_from_cart/', api_remove_from_cart, name='api_remove_from_cart'),
