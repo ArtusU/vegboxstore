@@ -47,6 +47,9 @@
 
 					this.showSuccess = true;
 					this.email = "";
+					setTimeout(() => {
+                        this.showSuccess = false
+                    }, 2000)
 				})
 				.catch(function (error) {
 					this.showSuccess = false;

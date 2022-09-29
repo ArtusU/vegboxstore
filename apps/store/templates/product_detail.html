@@ -65,9 +65,9 @@
 	{% else %}
 	<article class="message is-danger">
 		<div class="message-header">
-		  <p>The product is out of stock.</p>
+			<p>The product is out of stock.</p>
 		</div>
-	  </article>
+	</article>
 	{% endif %} {% endif %}
 
 	<hr />
@@ -111,7 +111,14 @@
 		</div>
 	</div>
 
-	{% endif %} 
+	{% endif %}
+
+	<h2 class="subtitle">Related products</h2>
+
+	{% with related_products as list_products %} 
+	{% include 'parts/product_list.html' %} 
+	{% endwith %} 
+	
 	{% endblock content %}
 </div>
 
