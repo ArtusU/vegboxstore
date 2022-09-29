@@ -28,6 +28,9 @@
 		<div class="message-body">The product was added to the cart!</div>
 	</article>
 	<h1 class="title">{{ product.title }}</h1>
+	<h2 class="subtitle">
+		{% if product.get_rating == 0 %}No ratings yet{% else %}<strong>{{ product.get_rating|floatformat:1 }}</strong> Stars{% endif %}
+	</h2>
 
 	<div class="columns">
 		<div class="column is-4">

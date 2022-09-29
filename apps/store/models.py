@@ -64,6 +64,15 @@ class Product(models.Model):
         thumbnail = File(thumb_io, name=image.name)
         return thumbnail
     
+    def get_rating(self):
+        total = sum(int(review['stars']) for review in self.reviews.values())
+
+        if self.reviews.count() > 0:
+            return total / self.reviews.count()
+        else:
+            return 0
+    
+    
 
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE)
