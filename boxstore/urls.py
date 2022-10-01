@@ -11,6 +11,7 @@ from apps.cart.views import cart_detail, success
 from apps.core.views import frontpage, contact, about
 from apps.coupon.api import api_can_use
 from apps.newsletter.api import api_add_subscriber
+from apps.order.views import admin_order_pdf
 from apps.store.views import product_detail, category_detail, search
 from apps.store.api import api_add_to_cart, api_remove_from_cart, checkout_session
 from apps.userprofile.views import myaccount, signup
@@ -28,6 +29,7 @@ urlpatterns = [
     path('cart/success/', success, name='success'),
     path('contact/', contact, name='contact'),
     path('about/', about, name='about'),
+    path('admin/admin_order_pdf/<int:order_id>/', admin_order_pdf, name='admin_order_pdf'),
     path('admin/', admin.site.urls),
     
     path('signup/', signup, name='signup'),
