@@ -34,8 +34,6 @@ def admin_order_pdf(request, order_id):
             content = "attachment; filename=%s.pdf" % order_id
             response['Content-Disposition'] = content
             
-            print('RESPONSE:', response)
-            
             return response
     
     return HttpResponse("Not Found")
