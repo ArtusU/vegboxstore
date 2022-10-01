@@ -53,6 +53,18 @@ class Product(models.Model):
     def get_absolute_url(self):
         return '/%s/%s/' % (self.category.slug, self.slug)
     
+    def get_thumbnail(self):
+        if self.thumbnail:
+            return self.thumbnail.url
+        else:
+            if self.image:
+                self.thumbnail = self.make_thumbnail(self.image)
+                self.save()
+                
+                return self.thumbnail.url
+            else:
+                return ''
+    
     def make_thumbnail(self, image, size=(300, 200)) -> thumbnail:
         img = Image.open(image)
         img.convert('RGB')
