@@ -11,7 +11,7 @@ from xhtml2pdf import pisa
 from .models import Order
 
 
-def render_tp_pdf(template_src, context_dict={}):
+def render_to_pdf(template_src, context_dict={}):
     template = get_template(template_src)
     html = template.render(context_dict)
     result = BytesIO()
@@ -27,7 +27,7 @@ def render_tp_pdf(template_src, context_dict={}):
 def admin_order_pdf(request, order_id):
     if request.user.is_superuser:
         order = get_object_or_404(Order, id=order_id)
-        pdf = render_tp_pdf('order_pdf.html', context_dict={'order': order})
+        pdf = render_to_pdf('order_pdf.html', context_dict={'order': order})
         
         if pdf:
             response = HttpResponse(pdf, content_type='application/pdf')
