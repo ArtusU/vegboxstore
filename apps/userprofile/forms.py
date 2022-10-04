@@ -7,6 +7,14 @@ from .models import Userprofile
 
 
 class UserprofileForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(UserprofileForm, self).__init__(*args, **kwargs)
+
+        self.fields['address'].widget.attrs['class'] = 'input'
+        self.fields['postcode'].widget.attrs['class'] = 'input'
+        self.fields['city'].widget.attrs['class'] = 'input'
+        self.fields['phone'].widget.attrs['class'] = 'input'
+        
     class Meta:
         model = Userprofile
         fields = '__all__'
