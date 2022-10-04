@@ -143,6 +143,14 @@
 				</div>
 
 				<div class="field">
+					<label>City</label>
+
+					<div class="control">
+						<input class="input" type="text" name="city" v-model="city" />
+					</div>
+				</div>
+
+				<div class="field">
 					<label>Postcode</label>
 
 					<div class="control">
@@ -155,13 +163,7 @@
 					</div>
 				</div>
 
-				<div class="field">
-					<label>City</label>
-
-					<div class="control">
-						<input class="input" type="text" name="city" v-model="city" />
-					</div>
-				</div>
+				
 			</div>
 		</div>
 
@@ -202,10 +204,10 @@
 				first_name: '{{ first_name }}',
 				last_name: '{{ last_name }}',
 				email: '{{ email }}',
-				phone: '',
-				address: '',
-				postcode: '',
-				city: '',
+				phone: '{{ phone }}',
+				address: '{{ address }}',
+				postcode: '{{ postcode }}',
+				city: '{{city }}',
 	            products: [{{ productsstring|safe }}],
 				coupon_value: 0,
 				coupon_code: '',

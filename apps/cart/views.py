@@ -17,14 +17,22 @@ def cart_detail(request):
         first_name = request.user.first_name
         last_name = request.user.last_name
         email = request.user.email
+        address = request.user.userprofile.address
+        postcode = request.user.userprofile.postcode
+        city = request.user.userprofile.city
+        phone = request.user.userprofile.phone
     else:
-        first_name = last_name = email = ''
+        first_name = last_name = email = address = postcode = city = phone = ''
     
     context = {
         'cart': cart,
         'first_name': first_name,
         'last_name': last_name,
         'email': email,
+        'address': address,
+        'postcode': postcode,
+        'city': city,
+        'phone': phone,
         'pub_key': settings.STRIPE_PUBLISHABLE_KEY,
         'productsstring': productsstring.rstrip(',')
         }
