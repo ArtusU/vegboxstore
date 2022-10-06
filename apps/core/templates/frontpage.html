@@ -1,41 +1,22 @@
 {% extends 'base.html' %} 
 {% block title %}Welcome | {% endblock %} 
 {% block content %}
+
 <h2 class="subtitle has-text-centered">Featured products</h2>
+    
+    {% include 'parts/product_list.html' %}
 
-<div class="columns is-multiline">
-	{% for p in list_products %}
-	<div class="column is-3">
-		<div class="card">
-            {% if p.thumbnail %}
-			<div class="card-image">
-                <figure class="image">
-                    <img src="{{ p.thumbnail.url }}" />
-				</figure>
-			</div>
-            {% endif %}
+    <hr>
 
-			<div class="card-content">
-				<div class="media">
-					<div class="media-content">
-						<p class="title is-4">{{ p.title }}</p>
-						<p class="subtitle is-6">£{{ p.price }}</p>
-					</div>
-				</div>
-			</div>
+    <div class="featured-categories">
+        {% for category in featured_categories %}
+            <h2 class="subtitle has-text-centered">{{ category.title }}</h2>
+        
+            {% with category.products.all|slice:":4" as list_products %}
+                {% include 'parts/product_list.html' %}
+            {% endwith %}    
+        {% endfor %}
+    </div>
 
-			<footer class="card-footer">
-				<a
-					href="{% url 'product_detail' p.category.slug p.slug %}"
-					class="card-footer-item"
-					>View</a
-				>
-			</footer>
-		</div>
-	</div>
-	{% endfor %}
-</div>
-
-<hr />
 
 {% endblock %}
