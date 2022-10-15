@@ -6,7 +6,7 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from apps.cart.cart import Cart
 from apps.coupon.models import Coupon
-from apps.order.models import Order, OrderItem
+from apps.order.models import Order
 from apps.order.utils import checkout
 
 from .models import Product
