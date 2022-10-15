@@ -47,6 +47,7 @@ def cart_detail(request):
         "city": city,
         "phone": phone,
         "pub_key": settings.STRIPE_PUBLISHABLE_KEY,
+        "paypal_client_id": settings.PAYPAL_CLIENT_ID,
         "productsstring": productsstring.rstrip(","),
     }
 

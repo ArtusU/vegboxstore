@@ -169,11 +169,10 @@
 
 		<div class="field">
 			<div class="control">
-				<button class="button is-primary" v-on:click="buy('stripe')">
+				<button class="button is-primary is-fullwidth" v-on:click="buy('stripe')">
 					Stripe
 				</button>
-				<button class="button is-primary" v-on:click="buy()">PayPal</button>
-				<div id="paypal-button-container" class="mt-4"></div>
+				<div id="paypal-button-container" class="mt-4 is-fullwidt"></div>
 			</div>
 		</div>
 	</div>
@@ -193,6 +192,7 @@
 </div>
 {% endblock content %} {% block scripts %}
 <script type="application/javascript" src="https://js.stripe.com/v3/"></script>
+<script type="application/javascript" src="https://www.paypal.com/sdk/js?client-id={{ paypal_client_id }}"></script> 
 <script>
 	var productapp = new Vue({
 	    el: '#cartapp',
@@ -214,22 +214,77 @@
 				showCouponCodeError: false
 	        }
 	    },
-	        computed: {
-	           numItems: function() {
-	               return store.state.numItems
-	           },
-	           totalCost: function() {
-	               return store.state.totalCost.toFixed(2)
-	           },
-			   totalCostWithCoupon: function() {
-				if (this.coupon_value > 0) {
-					var totalCostAfterCoupon = store.state.totalCost - (store.state.totalCost * (parseInt(this.coupon_value)) / 100);
-					return totalCostAfterCoupon.toFixed(2)
-				} else {
-					return store.state.totalCost.toFixed(2);
-				}
-			   }
-	       },
+		mounted() {
+            const amount = this.totalCostWithCoupon.toString();
+
+            paypal.Buttons({
+                onClick: () => {
+                    if (this.validateForm() > 0) {
+                        return false;
+                    }
+                },
+                createOrder: function(data, actions) {
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: {
+                                value: amount
+                            }
+                        }]
+                    })
+                },
+                onApprove: (data, actions) => {
+                    const formdata = {
+                        'first_name': this.first_name,
+                        'last_name': this.last_name,
+                        'email': this.email,
+                        'address': this.address,
+                        'postcode': this.postcode,
+                        'city': this.city,
+                        'phone': this.phone,
+                        'coupon_code': this.coupon_code,
+                        'gateway': 'paypal',
+                        'order_id': data.orderID
+                    };
+
+                    return actions.order.capture().then(function(details) {
+                        fetch('{% url 'create_checkout_session' %}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': '{{ csrf_token }}'
+                            },
+                            credentials: 'same-origin',
+                            body: JSON.stringify(formdata)
+                        })
+                        .then(function(response) {
+                            return response.json()
+                        })
+                        .then(function(result) {
+                            window.location.href = '/cart/success/';
+                        })
+                        .catch(function(error) {
+                            console.log('error:', error);
+                        });
+                    });
+                }
+            }).render('#paypal-button-container');
+        },
+		computed: {
+			numItems: function() {
+				return store.state.numItems
+			},
+			totalCost: function() {
+				return store.state.totalCost.toFixed(2)
+			},
+			totalCostWithCoupon: function() {
+			if (this.coupon_value > 0) {
+				var totalCostAfterCoupon = store.state.totalCost - (store.state.totalCost * (parseInt(this.coupon_value)) / 100);
+				return totalCostAfterCoupon.toFixed(2)
+			} else {
+				return store.state.totalCost.toFixed(2);
+			}
+			}
+		},
 	    methods: {
 			validateForm() {
 	               this.errors = [];
@@ -298,6 +353,7 @@
 					   'coupon_code': this.coupon_code,
 	               };
 				if (this.validateForm() === 0) {
+
 					var stripe = Stripe('{{ pub_key }}');
 
 					fetch('{% url 'create_checkout_session' %}', {
