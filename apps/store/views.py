@@ -1,6 +1,7 @@
 import random
 from django.shortcuts import get_object_or_404, render, redirect
 from django.db.models import Q
+from django.utils import timezone
 
 from apps.cart.cart import Cart
 
@@ -38,6 +39,9 @@ def search(request):
 
 def product_detail(request, category_slug, slug):
     product = get_object_or_404(Product, slug=slug)
+    product.num_visits += 1
+    product.last_visit = timezone.now()
+    product.save()
 
     if request.method == "POST" and request.user.is_authenticated:
         stars = request.POST.get("stars", 3)

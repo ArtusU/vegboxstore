@@ -46,10 +46,10 @@ class Product(models.Model):
     def __str__(self):
         return self.title
     
-    def save(self, *args, **kwargs):
-        if self.image:
-            self.thumbnail = self.make_thumbnail(self.image)
-        super().save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     if self.image:
+    #         self.thumbnail = self.make_thumbnail(self.image)
+    #     super().save(*args, **kwargs)
         
     def get_absolute_url(self):
         return '/%s/%s/' % (self.category.slug, self.slug)

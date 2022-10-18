@@ -18,7 +18,7 @@ def cart_detail(request):
                 product.price,
                 item["quantity"],
                 item["total_price"],
-                product.thumbnail.url,
+                product.get_thumbnail,
                 product_url,
                 product.num_available,
             )
